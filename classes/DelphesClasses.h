@@ -444,7 +444,12 @@ public:
 
   Float_t EtaOuter; // track pseudorapidity at the tracker edge
   Float_t PhiOuter; // track azimuthal angle at the tracker edge
+   
+    
+    
+  Float_t Mass; // track vertex position (t component)
 
+    
   Float_t T; // track vertex position (t component)
   Float_t X; // track vertex position (x component)
   Float_t Y; // track vertex position (y component)
@@ -462,7 +467,9 @@ public:
 
   Float_t TOFreco; // reconstructed time of flight
   Float_t TOFgen; // gen time of flight
+  Float_t tofReco; // reconstructed time of flight
 
+    
   Float_t L; // track path length
   Float_t D0; // track transverse impact parameter
   Float_t DZ; // track longitudinal impact parameter

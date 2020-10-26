@@ -11,7 +11,12 @@
 # Order of execution of various modules
 #######################################
 
+<<<<<<< HEAD
 set MaxEvents 10000
+=======
+set MaxEvents 1000
+set RandomSeed 123
+>>>>>>> upstream/Timing
 
 set ExecutionPath {
 
@@ -42,6 +47,10 @@ set ExecutionPath {
   TimeSmearingHcal
 
   VertexFinderDA4D
+<<<<<<< HEAD
+=======
+  HighMassVertexRecover
+>>>>>>> upstream/Timing
   PileUpSubtractor4D
 
   ElectronFilter
@@ -98,7 +107,11 @@ module PileUpMerger PileUpMerger {
   set PileUpFile MinBias.pileup
 
   # average expected pile up
+<<<<<<< HEAD
   set MeanPileUp 50
+=======
+  set MeanPileUp 10
+>>>>>>> upstream/Timing
 
   # 0-poisson, 1-uniform, 2-delta
   set PileUpDistribution 2
@@ -581,14 +594,41 @@ module VertexFinderDA4D VertexFinderDA4D {
 
 }
 
+<<<<<<< HEAD
+=======
+######################################
+# Heavy(slow) particles vertex recover
+######################################
+
+module HighMassVertexRecover HighMassVertexRecover {
+
+  set TrackInputArray VertexFinderDA4D/tracks
+  set VertexInputArray VertexFinderDA4D/vertices
+
+  set TrackOutputArray tracks
+  set VertexOutputArray vertices
+
+  set Verbose 0
+
+}
+
+>>>>>>> upstream/Timing
 ##########################
 # PileUpSubtractor4D
 ##########################
 
+<<<<<<< HEAD
 module  PileUpSubtractor4D PileUpSubtractor4D {
 # add InputArray InputArray OutputArray
 
   add InputArray VertexFinderDA4D/tracks tracks
+=======
+module PileUpSubtractor4D PileUpSubtractor4D {
+# add InputArray InputArray OutputArray
+
+  #add InputArray TimeSmearingMIP/tracks tracks
+  add InputArray HighMassVertexRecover/tracks tracks
+>>>>>>> upstream/Timing
   add InputArray TimeSmearingPhotons/photons photons
   add InputArray TimeSmearingNH/neutralhadrons neutralhadrons
   add InputArray TimeSmearingEcal/towers towers
@@ -596,8 +636,13 @@ module  PileUpSubtractor4D PileUpSubtractor4D {
 
   set VertexInputArray VertexFinderDA4D/vertices
 
+<<<<<<< HEAD
   set fChargedMinSignificance 10000.0
   set fNeutralMinSignificance 10000.0
+=======
+  set fChargedMinSignificance 3.0
+  set fNeutralMinSignificance 3.0
+>>>>>>> upstream/Timing
 }
 
 
@@ -648,6 +693,10 @@ module PdgCodeFilter ChargedHadronFilter {
 module Merger Calorimeter {
 # add InputArray InputArray
   add InputArray PileUpSubtractor4D/towers
+<<<<<<< HEAD
+=======
+  add InputArray PileUpSubtractor4D/towers
+>>>>>>> upstream/Timing
   add InputArray MuonFilter/muons
   set OutputArray towers
 }
@@ -775,6 +824,18 @@ module FastJetFinder FastJetFinder04 {
   set JetAlgorithm 6
   set ParameterR 0.4
 
+<<<<<<< HEAD
+=======
+  set ComputeNsubjettiness 1
+  set Beta 1.0
+  set AxisMode 4
+
+  set ComputeSoftDrop 1
+  set BetaSoftDrop 0.0
+  set SymmetryCutSoftDrop 0.1
+  set R0SoftDrop 0.4
+
+>>>>>>> upstream/Timing
   set JetPTMin 25.0
 }
 
@@ -865,7 +926,11 @@ module JetFlavorAssociation JetFlavorAssociation {
 ###################
 
 module Efficiency PhotonEfficiency {
+<<<<<<< HEAD
   set InputArray PileUpSubtractor4D/photons
+=======
+  set InputArray ECal/eflowPhotons
+>>>>>>> upstream/Timing
   set OutputArray photons
 
   # set EfficiencyFormula {efficiency formula as a function of eta and pt}
@@ -878,7 +943,11 @@ module Efficiency PhotonEfficiency {
 
   (abs(eta) > 2.5 && abs(eta) <= 4.0) * (pt > 1.0 && pt < 5.0)  * (0.60) +
   (abs(eta) > 2.5 && abs(eta) <= 4.0) * (pt > 5.0 && pt < 10.0) * (0.80) +
+<<<<<<< HEAD
   (abs(eta) > 2.5 && abs(eta) <= 4.0) * (pt > 10.0)   * (0.90) +
+=======
+  (abs(eta) > 2.5 && abs(eta) <= 4.0) * (pt > 10.0)		* (0.90) +
+>>>>>>> upstream/Timing
 
   (abs(eta) > 4.0 && abs(eta) <= 6.0) * (pt > 1.0 && pt < 5.0)  * (0.50) + \
   (abs(eta) > 4.0 && abs(eta) <= 6.0) * (pt > 5.0 && pt < 10.0) * (0.70) + \
@@ -1095,11 +1164,24 @@ module UniqueObjectFinder UniqueObjectFinder {
 
 module TreeWriter TreeWriter {
 # add Branch InputArray BranchName BranchClass
+<<<<<<< HEAD
   add Branch PileUpMerger/stableParticles Particle GenParticle
   add Branch PileUpMerger/vertices VertexGen Vertex
   add Branch VertexFinderDA4D/vertices Vertex4D Vertex
   add Branch VertexFinderDA4D/tracks Tracks4D Track
   add Branch TimeSmearingMIP/tracks  MIPTracks Track
+=======
+  add Branch Delphes/allParticles Particle GenParticle
+
+  add Branch GenMissingET/momentum GenMissingET MissingET
+
+  add Branch TrackSmearing/tracks Track Track
+  add Branch Calorimeter/towers Tower Tower
+
+  add Branch PileUpSubtractor4D/tracks EFlowTrack Track
+  add Branch PileUpSubtractor4D/photons EFlowPhoton Tower
+  add Branch PileUpSubtractor4D/neutralhadrons EFlowNeutralHadron Tower
+>>>>>>> upstream/Timing
 
   add Branch UniqueObjectFinder/photons Photon Photon
   add Branch UniqueObjectFinder/electrons Electron Electron
@@ -1107,5 +1189,17 @@ module TreeWriter TreeWriter {
   add Branch UniqueObjectFinder/jets Jet Jet
 
   add Branch GenJetFinder04/jets GenJet04 Jet
+<<<<<<< HEAD
   add Branch FastJetFinder04/jets Jet04 Jet
+=======
+  add Branch FastJetFinder04/jets ParticleFlowJet04 Jet
+  add Branch CaloJetFinder04/jets CaloJet04 Jet
+  add Branch TrackJetFinder04/jets TrackJet04 Jet
+
+  add Branch MissingET/momentum MissingET MissingET
+  add Branch ScalarHT/energy ScalarHT ScalarHT
+  add Branch VertexFinderDA4D/vertices Vertex4D Vertex
+
+  add Branch HighMassVertexRecover/tracks Track Track
+>>>>>>> upstream/Timing
 }

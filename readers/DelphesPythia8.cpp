@@ -150,10 +150,17 @@ void ConvertInput(Long64_t eventCounter, Pythia8::Pythia *pythia,
     candidate->Momentum.SetPxPyPzE(px, py, pz, e);
 
     candidate->Position.SetXYZT(x, y, z, t);
+<<<<<<< HEAD
 
     allParticleOutputArray->Add(candidate);
 
     if(!pdgParticle) continue;
+=======
+    allParticleOutputArray->Add(candidate);
+
+    if(!pdgParticle && (abs(pid) > 1006333 || abs(pid) < 1000612) ) 
+      continue;
+>>>>>>> upstream/Timing
 
     if(status == 1)
     {

@@ -132,7 +132,6 @@ void PileUpSubtractor4D::Process()
   while((candidate = static_cast<Candidate *>(fItVertexInputArray->Next())))
   {
     tempPTSquare = candidate->SumPT2;
-    //cout << " SumPT2 : " << tempPTSquare << " Selected SumPT2 : " << sumPTSquare << endl;
     if(tempPTSquare > sumPTSquare)
     {
       sumPTSquare = tempPTSquare;
@@ -153,7 +152,6 @@ void PileUpSubtractor4D::Process()
     iterator->Reset();
     while((candidate = static_cast<Candidate *>(iterator->Next())))
     {
-
       z = candidate->Zd;
       t = candidate->Td;
 

@@ -102,11 +102,7 @@ TLorentzVector Jet::P4() const
 TLorentzVector Track::P4() const
 {
   TLorentzVector vec;
-<<<<<<< HEAD
-  vec.SetPtEtaPhiM(PT, Eta, Phi, 0.0);
-=======
   vec.SetPtEtaPhiM(PT, Eta, Phi, Mass);
->>>>>>> upstream/Timing
   return vec;
 }
 

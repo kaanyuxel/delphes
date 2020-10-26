@@ -336,11 +336,7 @@ void TreeWriter::ProcessTracks(ExRootTreeBranch *branch, TObjArray *array)
 
     entry->Charge = candidate->Charge;
 
-<<<<<<< HEAD
-=======
     entry->Mass = candidate->Mass;
-      
->>>>>>> upstream/Timing
     entry->EtaOuter = eta;
     entry->PhiOuter = position.Phi();
 

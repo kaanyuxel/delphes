@@ -28,15 +28,6 @@
 #include "TLatex.h"
 #include "TVector3.h"
 
-#include "TAxis.h"
-#include "TGraphErrors.h"
-#include "TCanvas.h"
-#include "TString.h"
-#include "TLegend.h"
-#include "TFile.h"
-#include "TColor.h"
-#include "TLegend.h"
-
 #include <utility>
 #include <algorithm>
 #include <stdexcept>
@@ -162,30 +153,6 @@ void VertexFinderDA4D::Process()
   // clusterize tracks
   TObjArray *ClusterArray = new TObjArray;
   clusterize(*ClusterArray);
-
-  if(fVerbose>10)
-  {
-    unsigned int N = fEnergy_rec.size();
-    TGraph* gr1 = new TGraph(N, &fBeta_rec[0], &fNvtx_rec[0]);
-    gr1->SetName("gr1");
-    gr1->GetXaxis()->SetTitle("beta");
-    gr1->GetYaxis()->SetTitle("# Vtx");
-    TGraph* gr2 = new TGraph(N, &fBeta_rec[0], &fEnergy_rec[0]);
-    gr2->SetName("gr2");
-    gr2->GetXaxis()->SetTitle("beta");
-    gr2->GetYaxis()->SetTitle("Total Energy");
-    TGraph* gr3 = new TGraph(N, &fNvtx_rec[0], &fEnergy_rec[0]);
-    gr3->SetName("gr3");
-    gr3->GetXaxis()->SetTitle("# Vtx");
-    gr3->GetYaxis()->SetTitle("Total Energy");
-
-    auto f = new TFile("~/Desktop/debug/EnergyStat.root", "recreate");
-    gr1->Write("gr1");
-    gr2->Write("gr2");
-    gr3->Write("gr3");
-
-    f->Close();
-  }
 
   if (fVerbose){std::cout <<  " clustering returned  "<< ClusterArray->GetEntriesFast() << " clusters  from " << fInputArray->GetEntriesFast() << " input tracks" <<std::endl;}
 
